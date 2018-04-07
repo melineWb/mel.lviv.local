@@ -1,0 +1,53 @@
+extends admin
+block mainAdmin
+  h1 #{title}
+  .artContainerUpload
+    div
+      a.btn.btn-primary(data-toggle="collapse" href="#collapseUpload" role="button" aria-expanded="false" aria-controls="collapseUpload") Upload media
+    .collapse#collapseUpload
+      .card.card-body
+        form(role='form',method='post',action='/mel-admin/art/',enctype="multipart/form-data")
+          .formUploadNew
+            .row
+              .col
+                .custom-file-container(data-upload-id="myUniqueUploadId")
+                  label.card-title Добавить изображение
+                    a(href="javascript:void(0)" title="Clear Image").custom-file-container__image-clear
+                      i.fa.fa-close
+                  label.custom-file-container__custom-file
+                    input(type="file" accept="*" name="file").custom-file-container__custom-file__custom-file-input
+                    input(type="hidden" name="MAX_FILE_SIZE" value="10485760")
+                    span.custom-file-container__custom-file__custom-file-control
+                  .custom-file-container__image-preview
+
+              .col
+                .card-body
+                  .form-group
+                    label(for="title") Название
+                    input#title.form-control(name='title' placeholder='Enter title' type='text')
+                  .form-group
+                    textarea.keys.form-control(name="keys")
+                    small#metki.form-text.text-muted Метки разделяются запятыми
+                  .form-group
+                    button.btn.btn-primary(type="submit") Submit
+
+  .artContainer
+    .row
+      each image in images
+        .col-sm-3
+          .card.cardImg
+            img.card-img-top(src=image.url)
+            .card-body
+              if title == 'art'
+                <h5 class="card-title">#{image.title}</h5>
+                p.card-text
+                  each key in image.keys
+                    span #{key}&nbsp
+              a.card-link.text-danger(href="#") Удалить
+              if title == 'art'
+                a.card-link.text-primary Изменить
+              else
+                a.card-link.text-primary Выбрать
+
+  script.
+    const upload = new FileUploadWithPreview('myUniqueUploadId');

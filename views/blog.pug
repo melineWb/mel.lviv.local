@@ -1,0 +1,71 @@
+extends layaut
+
+block body
+  section.categories.topCatBlock
+    .parallax-container
+      .parallax
+        if cat === 'development'
+          img(src="/img/dev1.jpg")
+        else
+          img(src="/img/life1.jpg")
+    .categoriesDesc
+      .container
+        .row
+          .col.m7.offset-m5.s12
+            if cat === 'development'
+              h2 Development
+              p Здесь собраны статьи для разработчиков сайтов и инетерсные новости из мира техники.
+            else
+              h2 Life
+              p Все что меня окружает - путешествия, интересные факты и развлечения.
+            .searchLine
+              .search-wrapper.card
+                input(placeholder="Поиск")#search
+                i.fa.fa-search(aria-hidden="true")
+
+  section.blogPage
+    .container
+      .row
+        .col.m9.s12
+          .contentItems
+            .row
+              each article in articles
+                - let url = `/development/${article.url}`;
+                .col.m6.s12
+                  .card.hoverable
+                    .card-image
+                      a(href=url)
+                        div.articleImg(style=`background-image:url(${article.img})`)
+                    .card-content
+                      span.card-title #{article.title}
+                      p #{article.description}
+                    .card-action
+                      a(href=url) Читать подробнее
+                        i.fa.fa-angle-right(aria-hidden="true")
+
+
+        .col.m3.s12.hide-on-med-and-down
+          .asside
+            .categories
+              .collection
+                if cat === 'development'
+                  - var options = ['Front-end', 'Node js', 'CMS', 'Другое'];
+                else
+                  - var options = ['Статьи', 'Видео', 'Art'];
+
+                each option, index in options
+                  <a href="#!" class="collection-item">#{option}</a>
+
+            .filter
+              .input-field.col.s12
+                form(action="#" method="post")
+                  select.form-control(name="filter")
+                    option По новизне
+                    option По популярности
+                  label Отображение
+
+            .tags
+              h4 Метки
+              .tagsBlc
+                //- each key, index in keys
+                  //- span(style={'font-size': key.font}) #{key.str}

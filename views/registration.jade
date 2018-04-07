@@ -1,0 +1,43 @@
+doctype html
+html(lang="ru")
+  head
+    title Demandware Test System
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css")
+    link(rel="stylesheet", href="style/style.css")
+    
+    script(src="http://code.jquery.com/jquery-latest.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js")
+    
+    body
+      .loginpage
+        .loginform
+          .loginformInsider
+            .card
+              .card-content
+                span.card-title.center Registration
+                form(role="form",method="post",action='/users/registration')
+                  .row
+                    if msg != ''
+                      p.errorMsg #{msg}
+                    .input-field
+                      label(for="userfullname") Name
+                      input.validate#userfullname(type="text", name="userfullname",required)
+                    .input-field
+                      label(for="email") Email
+                      input.validate#email(type="email", name="email",required)
+                    .input-field
+                      label(for="username") Login
+                      input.validate#username(type="text", name="username",required)
+                    .input-field
+                      label(for="password") Password
+                      input.validate#password(type="password", name="password",required)
+                    .input-field.center
+                      button.waves-effect.waves-light.btn.btnDefault(type="submit") Registration
+              .card-action
+                a(href="/login") Back to Login
+              
+    script(src="/js/index.js")

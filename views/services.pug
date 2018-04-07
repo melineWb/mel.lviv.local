@@ -1,0 +1,116 @@
+extends layaut
+block headLinks
+  script(type='text/javascript' src='/src/unitegallery-master/dist/js/unitegallery.min.js')
+  link(rel="stylesheet", href="/src/unitegallery-master/dist/css/unite-gallery.css")
+  script(type='text/javascript' src='/src/unitegallery-master/dist/themes/tiles/ug-theme-tiles.js')
+block body
+  section.categories.topCatBlock.videoTopBlc
+    .videoBlc
+      video(width="100%" height="auto" autoplay muted="true")
+        source(src="/img/output.mp4" type="video/mp4")
+        | Your browser does not support the video tag.
+      .categoriesDesc
+        .container
+          .row
+            .col.m7.offset-m5.s12
+              h2 Art
+              p Вы даёте нам фотографии/ю и небольшой комментарий,  а я предлагаю вам лучшее решение и воплощаю в портрете/картине.
+              .linksCatBlc
+                .inlBlc.btnSimpleBox
+                  a.btnSimple(href="/contacts") Заказать
+
+  section.blogPage.articleItemBox
+    .container
+      .row
+        .col.s12
+          .articleItemContent.servicesBox
+            .row
+              .col.s12.m4
+                .serviceItem
+                  .card
+                    .card-image
+                      img(src="/img/1s.jpg")
+                      span.card-title Черно-белый портрет
+                    .card-stacked
+                      .card-content
+                        p Черно-белый портрет выполняется полностью вручную. Цена указана за формат а4 с одним лицом. Стоимость зависит от сложности работы.
+                      .card-action
+                        p от 250 грн
+
+                .serviceItem
+                  .card
+                    .card-image
+                      img(src="/img/5s.jpg")
+                      span.card-title Печатная продукция
+                    .card-stacked
+                      .card-content
+                        p Дизайн рекламных вывесок, банеров, визиток, игральных карт и т.д.
+                      .card-action
+                        p от 400 грн
+              .col.s12.m4
+                .serviceItem
+                  .card
+                    .card-image
+                      img(src="/img/2s.jpg")
+                      span.card-title Потрет цветными карандашами
+                    .card-stacked
+                      .card-content
+                        p Цена указана за формат а4 с одним лицом. Стоимость зависит от сложности работы
+                      .card-action
+                        p от 300 грн
+                .serviceItem
+                  .card
+                    .card-image
+                      img(src="/img/4s.jpg")
+                      span.card-title Роспись по ткани
+                    .card-stacked
+                      .card-content
+                        p Выполнена вручную высококачественной акриловой краской. Можно стирать при 40 градусах! Вместе подбираем майку, футболку.... Стоимость указана с учетом цены футболки, зависит от сложности работы.
+                      .card-action
+                        p от 500 грн
+
+              .col.s12.m4
+                .serviceItem
+                  .card
+                    .card-image
+                      img(src="/img/3s.jpg")
+                      span.card-title Портрет цветной пастелью
+                    .card-stacked
+                      .card-content
+                        p Портрет выполнен качественной пастелью с использованием закрепителя на пастельной бумаге с текстурой полотна. Цена указана за формат а4 с одним лицом. Стоимость зависит от сложности работы.
+                      .card-action
+                        p от 350 грн
+
+
+
+        //- .col.m3.s12
+        //-   .asside
+        //-     .categories
+        //-       .collection
+        //-         a(href="/art/").collection-item Галерея
+        //-         a(href="/art/services").collection-item.active Услуги
+        //-         a(href="/contacts/").collection-item Заказать
+
+  section.categories.servicesParalax
+    .parallax-container
+      .parallax
+        img(src="/img/sbg.jpg")
+    .categoriesDesc
+      .container
+        .row
+          .col.s12.m3
+            .center.imgBl
+              img(src="/img/1sb.png")
+            p.center.white-text Больше 300 выполненых работ
+          .col.s12.m3
+            .center.imgBl
+              img(src="/img/2sb.png")
+            p.center.white-text Заказ отдаетя при 100% одобрении клиента
+          .col.s12.m3
+            .center.imgBl
+              img(src="/img/3sb.png")
+            p.center.white-text Клиенты обращаются к нам по несколько раз
+          .col.s12.m3
+            .center.imgBl
+              img(src="/img/4sb.png")
+            p.center.white-text Оплата на карту или наложенным платежом

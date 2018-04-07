@@ -1,0 +1,40 @@
+extends layaut
+
+block body
+  section.topCatBlock.articleItemImg
+    .container
+        img(src=article.img)
+  section.blogPage.articleItemBox
+    .container
+      .row
+        .col.m9.s12
+          .articleItemContent
+            .articleItemContentTitle
+              h1 #{article.title}
+              .bordered
+                p
+                  span
+                    i.fa.fa-list-alt
+                    | Статьи
+                  span
+                    i.fa.fa-calendar-check-o
+                    | 05.06.2017
+                  span
+                    i.fa.fa-eye
+                    | 1560
+            .contentItemBlog
+              #{article.content}
+
+        .col.m3.s12.hide-on-med-and-down
+          .asside
+            .categories
+              .collection
+                if cat === 'development'
+                  - var options = ['Front-end', 'Node js', 'CMS', 'Другое'];
+                else
+                  - var options = ['Статьи', 'Видео', 'Art'];
+
+                each option, index in options
+                  <a href="#!" class="collection-item">#{option}</a>
+
+            .newsOnThisTheme

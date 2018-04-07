@@ -1,0 +1,116 @@
+extends layaut
+block body
+  section.topIndexBlc
+    .descTopIndexBlc
+      .center.descTopInsider
+        .imgBlcTop
+          img.responsive-img.circle(src="/img/mySm.jpg")
+        h1 Meline
+        .hide-on-med-and-down
+          .lineDecorBot
+            p JS Developer
+            .lineBord
+          .lineDecorBot
+            p Инженер пром электроники
+            .lineBord
+          .lineDecorBot
+            p Художник
+            .lineBord
+          .lineDecorBot
+            p Блогер
+            .lineBord
+    .LinkDown
+      i.fa.fa-angle-down(aria-hidden="true")
+
+  section.artIndex
+    h2 Art
+    .container.center
+      p.artIndexDesc В этом разделе вы найдете мои работы карандашами, пастелью и красками. Портреты, шаржи, рисунки по ткани и природа. Протрет - это самый уникальный и оригинальный подарок, который доступен каждому и понравится всем! Дарите близким радость!
+      .row.center
+        .inlBlc.btnSimpleBox
+          a.btnSimple(href="/art") Галерея
+        .inlBlc.btnSimpleBox
+          a.btnSimple(href="/art/services") Услуги
+        .inlBlc.btnSimpleBox
+          a.btnSimple(href="/contacts") Заказать
+    .sliderImgGal#sliderImgGal
+      .row
+        each image, index in lastArt
+          .itemSlid
+            img(src=image.url alt=image.title)
+
+  section.categories
+    .parallax-container
+      .parallax
+        img(src="/img/dev1.jpg")
+    .categoriesDesc
+      .container
+        .row
+          .col.m7.offset-m5.s12
+            h2 Development
+            p Здесь собраны статьи для разработчиков сайтов и инетерсные новости из мира техники.
+            .linksCatBlc
+              .inlBlc.btnSimpleBox
+                a(href="#").btnSimple Front-end
+              .inlBlc.btnSimpleBox
+                a(href="#").btnSimple Node js
+              .inlBlc.btnSimpleBox
+                a(href="#").btnSimple CMS
+              .inlBlc.btnSimpleBox
+                a(href="#").btnSimple Другое
+
+  section.blog
+    .container
+      .row
+        each article in blogs
+          - let url = `/mel-admin/development/${article.url}`;
+          .col.m4.s12
+            .card.hoverable
+              .card-image
+                a(href=url)
+                  div.articleImg(style=`background-image:url(${article.img})`)
+              .card-content
+                span.card-title #{article.title}
+                p #{article.description}
+              .card-action
+                a(href=url) Читать подробнее
+                  i.fa.fa-angle-right(aria-hidden="true")
+
+  section.categories
+    .parallax-container
+      .parallax
+        img(src="/img/life1.jpg")
+    .categoriesDesc
+      .container
+        .row
+          .col.m7.offset-m5.s12
+            h2 Life
+            p Все что меня окружает - путешествия, интересные факты и развлечения.
+            .linksCatBlc
+              .inlBlc.btnSimpleBox
+                a(href="/art").btnSimple ART
+              .inlBlc.btnSimpleBox
+                a(href="#").btnSimple Статьи
+              .inlBlc.btnSimpleBox
+                a(href="/videos").btnSimple Видео
+
+  section.blog
+    .container
+      .row
+        each article in blogs
+          - let url = `/mel-admin/development/${article.url}`;
+          .col.m4.s12
+            .card.hoverable
+              .card-image
+                a(href=url)
+                  div.articleImg(style=`background-image:url(${article.img})`)
+              .card-content
+                span.card-title #{article.title}
+                p #{article.description}
+              .card-action
+                a(href=url) Читать подробнее
+                  i.fa.fa-angle-right(aria-hidden="true")
+
+  script(src="/src/slider.js")
+  script.
+    $('#sliderImgGal').fullSlider();

@@ -1,0 +1,49 @@
+extends layaut
+
+block body
+  .container
+    .title
+      h1 Create new test
+    .formTest.white
+      form(role="form",method="post",action='/tests/add',enctype="multipart/form-data")
+        .row
+          .col.s12
+            .input-field
+              label(for="testname") Test name
+              input.validate#testname(type="text",name="testname",required)
+            label How much user can pass this test?
+            select(name="attemptselect")
+              option(value="unset" name="unset" selected) unset
+              option(value="1" name="attempt") 1 attempt
+            p Minimum result when test will be passed (%). Default - 60%.
+            .input-field
+              label(for="min") Minimum result (%)
+              input.validate#testname(type="number",name="min", value="60")
+            .input-field
+              input(type="checkbox", name="publish", value="true", id="#publish", checked)
+              label(for="#publish") Publish test
+              
+            h2 Upload and edit test
+            p You can upload a new test choose the file. The file's extention has to be *.txt.
+            p Example of tests style
+            p 1. Question?
+            ol.testExmp 
+              li Answer (t)
+              li Answer
+              li Answer (t)
+              li Answer
+              
+            .input-field
+              .file-field.input-field
+                .btn.btnDefault
+                  span File
+                  input(type="file" name="file" accept=".txt")
+                .file-path-wrapper
+                  input.file-path(type="text")
+            
+            .input-field.twoBtns
+              .row
+                .col.s6
+                  a.waves-effect.waves-light.btn.greyDarken(href="/tests") Cancel
+                .col.s6.right-align
+                  button.waves-effect.waves-light.btn.btnDefault(type="submit") Save

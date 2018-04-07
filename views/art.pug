@@ -1,0 +1,33 @@
+extends layaut
+block headLinks
+  script(type='text/javascript' src='/src/unitegallery-master/dist/js/unitegallery.min.js')
+  link(rel="stylesheet", href="/src/unitegallery-master/dist/css/unite-gallery.css")
+  script(type='text/javascript' src='/src/unitegallery-master/dist/themes/tiles/ug-theme-tiles.js')
+block body
+  section.categories.topCatBlock.videoTopBlc
+    .videoBlc
+      video(width="100%" height="auto" autoplay muted="true")
+        source(src="/img/output.mp4" type="video/mp4")
+        | Your browser does not support the video tag.
+      .categoriesDesc
+        .container
+          .row
+            .col.m7.offset-m5.s12
+              h2 Art
+              p Вы даёте нам фотографии/ю и небольшой комментарий,  а я предлагаю вам лучшее решение и воплощаю в портрете/картине.
+              .linksCatBlc
+                .inlBlc.btnSimpleBox
+                  a.btnSimple(href="/art") Галерея
+                .inlBlc.btnSimpleBox
+                  a.btnSimple(href="/art/services") Услуги
+                .inlBlc.btnSimpleBox
+                  a.btnSimple(href="/contacts") Заказать
+
+  section.galleryBox
+    .container
+      #gallery
+        each image, index in images
+          img(alt=image.title src=image.url data-image=image.url data-description=image.title)
+
+  script.
+    $('#gallery').unitegallery();

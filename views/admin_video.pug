@@ -1,0 +1,24 @@
+extends admin
+block mainAdmin
+  .formFullW
+    form(role='form',method='post',action='/mel-admin/video/')
+      .form-group
+        label(for="title") Ссылка на видео
+        input#title.form-control(name='video' placeholder='Enter link' type='text')
+      .form-group
+        textarea.keys.form-control(name="keys")
+        small#metki.form-text.text-muted Метки разделяются запятыми
+      .form-group
+        button.btn.btn-primary(type="submit") Submit
+  .row
+    if videos && videos.length > 0
+      each video in videos
+        .col-sm-3
+          .card
+            iframe(width="100%" height="auto" src=video.video frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen)
+            .card-body
+              p.card-text
+                each key in video.keys
+                  span #{key}&nbsp
+              - var hrefDel = "/mel-admin/video/" + video._id;
+              a.card-link.text-danger(href=hrefDel) Удалить

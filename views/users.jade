@@ -1,0 +1,50 @@
+extends layaut
+
+block body
+  .container
+    .title
+      h1 Users
+    .usersList
+      if currentUser.role == 'admin'
+        ul.collection.collapsible(data-collapsible="accordion")
+          each user, index in users
+            if user.id !== currentUser._id
+              li.collection-item.avatar
+                .collapsible-header
+                  .circle
+                    img(src="#{user.img}")
+                  span.title #{user.name}
+                  p #{user.role}
+                  .editItemColl.secondary-content
+                    span    
+                      i.material-icons mode_edit
+
+                .collapsible-body
+                  form(role="form",method="post",action='/users/role/#{user._id}')
+                    .row
+                      .col.s10
+                        label Chose user role
+                        select(name="roleselect")
+                          option(value="" disabled selected) #{user.role}
+                          option(value="user" name="user") user
+                          option(value="admin" name="admin") admin
+                        .center
+                          button.waves-effect.waves-light.btn.btnDefault(type="submit") Change
+                      .col.s2.contentView
+                        .right-align
+                          a(href="/users/#{user.id}")
+                            i.material-icons visibility
+      else
+        ul.collection
+          each user, index in users
+            if user.id !== currentUser._id
+              li.collection-item.avatar
+                a(href="/users/#{user.id}")
+                  .circle
+                    img(src="#{user.img}")
+                span.title #{user.name}
+                p #{user.role}
+                .editItemColl.secondary-content
+                  a(href="/users/#{user.id}")
+                    i.material-icons visibility
+        

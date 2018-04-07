@@ -1,0 +1,137 @@
+extends layaut
+
+block body
+  .indexPage
+    .title
+      h1 Profile #{currentUser.username}
+    .parallax-container.paralaxUser
+      .parallax
+        img(src="/img/bgIndex1.jpg")
+      .profileInfo
+        .container
+          .row
+           .col.s12
+            .card.horizontal
+              .card-image
+                img(src="#{currentUser.img}")
+              .card-stacked
+                .card-content
+                  span.card-title #{currentUser.name}
+                  p 
+                    b Login: 
+                    | #{currentUser.username}
+                  p 
+                    b Role: 
+                    | #{currentUser.role}
+                  p 
+                    b Passed tests: 
+                    | #{currentUser.results.length}
+                  p 
+                    b Sertificates: 
+                    | #{currentUser.certif.length}
+                  
+                .card-action
+                  a(href="mailto:#{currentUser.email}").mailTo #{currentUser.email}
+  
+  if currentUser.role != 'admin'
+    .container.white.contTop
+       if currentUser.results.length > 0
+         .diagramsBlc
+            h2 Statistic
+           .row
+             .col.m6.s12.center
+               h3 Passed tests
+               .circle(id="circles-1")
+             .col.m6.s12.center
+               h3 Successfully completed tests
+               .circle(id="circles-2")
+       else
+        .center
+          p #{currentUser.name} don't pass any test yet.
+             
+     
+     if currentUser.certif.length > 0
+       .certifBlc
+         .parallax-container
+           .parallax
+             img(src="/img/85558501.jpg")
+           .certifInfo
+             .container
+               h2 Sertificates
+               .sliderBox
+                 .arrw.leftArrw
+                 .arrw.rightArrw
+                 .sliderBoxIns
+                   .sliderCont
+                     each certif, index in currentUser.certif
+                       .slideItem
+                         a(href="#!")
+                           img(src="/img/certif.jpg")
+                           .slideItemText
+                             p #{currentUser.name}
+                             p.testName #{certif}
+     .container
+       .passedTests.testsList
+         if currentUser.results.length > 0
+           h2 Passed Tests
+           - var successComplited = 0;
+           ul.collection
+             each test, index in currentUser.results
+               li.collection-item.with-header
+                 .collection-item
+                   p #{test.name}
+                     span.secondary-content.testRes
+                       if test.mark === 'pass'
+                         - successComplited++;
+                         img(src="/img/pass.png")
+                       else
+                         img(src="/img/fail.png")
+  
+  .modal(id="modalCertif")
+    .modal-content
+      .certifModal
+        img(src="/img/certif.jpg")
+        .slideItemText
+          p #{currentUser.name}
+          p.testName
+      .modal-action.modal-close
+
+block scripts
+ script(src="/js/slider.js")
+ script(src="/js/circles.min.js")
+ script.
+   var myCircle = Circles.create({
+     id:                  'circles-1',
+     radius:              100,
+     value:               #{currentUser.results.length},
+     maxValue:            #{testCount},
+     width:               30,
+     text:                function(value){return value;},
+     colors:              ['#b0d4e3', '#00a1e1'],
+     duration:            400,
+     wrpClass:            'circles-wrp',
+     textClass:           'circles-text',
+     valueStrokeClass:    'circles-valueStroke',
+     maxValueStrokeClass: 'circles-maxValueStroke',
+     styleWrapper:        true,
+     styleText:           true
+   });
+   
+   var myCircle = Circles.create({
+     id:                  'circles-2',
+     radius:              100,
+     value:               #{successComplited},
+     maxValue:            #{currentUser.results.length},
+     width:               30,
+     text:                function(value){return value;},
+     colors:              ['#cbef85', '#84bc13'],
+     duration:            400,
+     wrpClass:            'circles-wrp',
+     textClass:           'circles-text',
+     valueStrokeClass:    'circles-valueStroke',
+     maxValueStrokeClass: 'circles-maxValueStroke',
+     styleWrapper:        true,
+     styleText:           true
+   });
+                
+    

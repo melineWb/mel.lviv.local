@@ -1,0 +1,71 @@
+extends layaut
+
+block body
+  .container
+    .title
+      h1 Tests
+    - var dataUserTests = currentUser.results;
+    .testsList
+      if tests.length > 0
+        ul.collection
+          each test, index in tests
+            if (currentUser.role == 'user')
+              if test.publish
+                li.collection-item.with-header
+                  .collection-item
+                    - var hrefTest = "/tests/" + test._id;
+
+                    if test.trying == 1
+                      each data, index in dataUserTests
+                        if  test._id == data._id
+                          - hrefTest = "#blockTest";
+                      
+                    a(href="#{hrefTest}") #{test.name}
+                      .editItemColl
+                        each data, index in dataUserTests
+                          if  test._id == data._id
+                            span.testRes
+                              if data.mark === 'pass'
+                                img(src="/img/pass.png")
+                              else
+                                img(src="/img/fail.png")
+                        if  test.trying == 'unset'
+                          span.trying ∞ attempt
+                        else 
+                          span.trying #{test.trying} attempt
+
+            else
+              li.collection-item.with-header
+                .collection-item
+                  a(href="/tests/edit/#{test._id}") #{test.name}
+                    .editItemColl
+                      if  test.trying == 'unset'
+                        span.trying ∞ attempt
+                      else
+                        span.trying #{test.trying} attempt
+                      if test.publish
+                        i.material-icons visibility
+                      else
+                        i.material-icons visibility_off
+
+                      form(role="form",method="post",action='/tests/del/#{test._id}')
+                        button.removeItem(type="submit")
+                          i.material-icons delete
+      else 
+        .container
+          p Create your first 
+            a(href="/tests/add") Test
+            |!
+    if currentUser.role == 'admin'
+      .fixed-action-btn
+        a.btn-floating.btn-large.red(href="tests/add")
+          i.large.material-icons add
+          
+  .modal(id="blockTest")
+    .modal-content
+      .center
+        h3 You already passed this test
+      p You have 1 attempt to pass this test
+      .center
+       img(src="/img/tested.jpg")
+      .modal-action.modal-close

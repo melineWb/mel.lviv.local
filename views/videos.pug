@@ -1,0 +1,38 @@
+extends layaut
+block body
+  section.categories.topCatBlock
+    .parallax-container
+      .parallax
+        img(src="/img/life1.jpg")
+    .categoriesDesc
+      .container
+        .row
+          .col.m7.offset-m5.s12
+            h2 Видео
+            p Здесь собраны видео с канала Meline ArtLife на темы: Путешествия & Творчество
+            .searchLine
+              .search-wrapper.card
+                input(placeholder="Поиск")#search
+                i.fa.fa-search(aria-hidden="true")
+
+  section.blogPage
+    .container
+      .row
+        .col.m9.s12
+          .contentItems
+            .row
+              each video, index in videos
+                .col.m6.s12.videoBox
+                  iframe(width="100%" src=video.video frameborder="0" allowfullscreen)
+        .col.m3.s12
+          .asside
+            .categories
+              .collection
+                a(href="#!").collection-item Статьи
+                a(href="#!").collection-item.active Видео
+                a(href="#!").collection-item Art
+            .tags
+              h4 Метки
+              .tagsBlc
+                each key, index in keys
+                  span(style={'font-size': key.font}) #{key.str}

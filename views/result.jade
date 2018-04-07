@@ -1,0 +1,69 @@
+extends layaut
+
+block body
+  .container.white.contTop
+    .title
+      h1 Results #{test.name}
+    .formTest.bordBot
+      .row
+        .col.m4.s12
+          .cardResultContent.center
+            img(src="/img/11.png")
+            p Test: #{test.name}
+              
+        .col.m4.s12
+          .cardResultContent.center
+            img(src="/img/12.png")
+            p Your results: #{persents} %
+        .col.m4.s12
+          .center
+            if mark == 'pass'
+              img.testResultImg(src="/img/pass.png")
+            else 
+              img.testResultImg(src="/img/fail.png")
+    .formTest
+      - var leters = ['a','b','c','d','e','f','g','h','i','j','k'];
+      each quest, index in test.data
+        .questionItem.bordBot
+          .row
+            .col.s11
+              h4 
+                span #{index + 1}. 
+                | #{quest.question}
+                
+              - var answersArr = [];
+              - var arrSort = 'left';
+              - var numbVarEd = 0;
+              
+              each value, key in quest
+                if key.indexOf('answer')  != '-1'
+                  if (key[6] == 0 && numbVarEd == 0)
+                    - arrSort = 'right';
+                    
+                  if arrSort == 'right'
+                    - answersArr.push(quest[key]);
+                  else
+                    - answersArr.unshift(quest[key]);
+                  - numbVarEd++;
+                  
+              each reslt, itemRes in fullResults[index]
+                each resltLine, itemLine in reslt
+                  - var classItem = 'error';
+                  if resltLine
+                    - var classItem = 'success';
+                    
+                  - numbVarEd = 0;
+                  
+                  for itemAnsw in answersArr
+                    .row
+                      //- p leters #{leters[numbVarEd]}
+                      if (leters[numbVarEd] == itemLine)
+                        .col.s1.testAnsw.right-align
+                          p.numbVar #{itemLine}
+                        .col.s11.testAnsw
+                          p(class="#{classItem}") #{itemAnsw}
+                      - numbVarEd++;
+                  
+
+      //- p #{mark}
+    

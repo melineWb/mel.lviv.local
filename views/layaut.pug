@@ -1,0 +1,109 @@
+doctype html
+html(lang="ru")
+  head
+    title Meline
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css", rel="stylesheet")
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+    link(rel="stylesheet", href="/style/style.css")
+
+    script(src="https://code.jquery.com/jquery-3.2.1.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js")
+
+    block headLinks
+
+    body
+      header
+        ul.dropdown-content.dropHeader#dropDev
+          li
+            a(href="/development") Все статьи
+          li
+            a(href="#!") Front-end
+          li
+            a(href="#!") Node js
+          li
+            a(href="#!") CMS
+          li
+            a(href="#!") Другое
+
+        ul.dropdown-content.dropHeader#dropLife
+          li
+            a(href="/life") Статьи
+          li
+            a(href="/video") Видео
+
+        ul.dropdown-content.dropHeader#dropArt
+          li
+            a(href="/art") Галерея
+          li
+            a(href="/art/services") Услуги
+
+        nav.navBar
+          .nav-wrapper
+            a.brand-logo(href="/")
+              img(src="/img/logo.png")
+            a.button-collapse(href="#", data-activates="mobile-demo")
+              i.fa.fa-bars(aria-hidden="true")
+            ul#mobile-demo.side-nav
+              li
+                a(href="/") Главная
+              li
+                a.dropdown-button(href="#!" data-activates="dropDev") Development
+              li
+                a.dropdown-button(href="#!" data-activates="dropLife") Life
+              li
+                a.dropdown-button(href="#!" data-activates="dropArt") Art
+              li
+                a(href="/contacts") Контакты
+
+            ul#nav-mobile.right.hide-on-med-and-down
+              li
+                a(href="/") Главная
+              li
+                a(href="/development") Development
+              li
+                a(href="/life") Life
+              li
+                a(href="/art") Art
+              li
+                a(href="/contacts") Контакты
+
+      block body
+
+      footer.page-footer
+        .container
+          .row
+            .col.l6.s12
+              h5.white-text Авторский блог Meline
+              .socilLine
+                a(href="https://www.youtube.com/channel/UCHVAGaSP_Veleh7F5nZmZIw" target="blank")
+                  i.fa.fa-youtube-play
+                a(href="https://www.facebook.com/marina.semiroz" target="blank")
+                  i.fa.fa-facebook
+                a(href="https://plus.google.com/u/0/100848964244907807045/about/p/pub" target="blank")
+                  i.fa.fa-google-plus
+                a(href="https://vk.com/id_meline_smile" target="blank")
+                  i.fa.fa-vk
+                a(href="http://ok.ru/profile/572960386287" target="blank")
+                  i.fa.fa-odnoklassniki
+                a(href="https://www.linkedin.com/profile/view?id=351709181&amp;trk=spm_pic" target="blank")
+                  i.fa.fa-linkedin
+                a(href="mailto:meline.pe081@gmail.com" target="blank")
+                  i.fa.fa-at
+            .col.l4.offset-l2.s12
+              ul
+                li
+                  a(href="/development") Development
+                li
+                  a(href="/life") Life
+                li
+                  a(href="/art") Art
+                li
+                  a(href="/contacts") Контакты
+        .footer-copyright
+          .container © 2017 Meline
+
+      script(src="/src/index.js")

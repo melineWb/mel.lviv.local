@@ -1,0 +1,63 @@
+extends layaut
+
+block body
+  .container
+    - var leters = ['a','b','c','d','e','f','g','h','i','j','k'];
+    .title
+      if test.publish
+        h1 #{test.name}
+      else
+        h1 Draft #{test.name}
+    .formTest.white
+      p You have 
+        if  test.trying == 'unset'
+          span.trying ∞ attempt to pass this test
+        else
+          span.trying #{test.trying} attempt to pass this test
+      form(role="form",method="post",action='/test/#{test._id}/check')
+        .testView
+          
+          each quest, index in test.data
+            .questionItem.bordBot
+              .row
+                .col.s12
+                  - var type = 'radio';
+                  if quest.results.length > 1
+                    - type = 'checkbox';
+                  h4 
+                    span #{index + 1}. 
+                    | #{quest.question}
+                  - var numbVarEd = 0;
+                  - var answersArr = [];
+                  - var arrSort = 'left';
+                  
+                  each value, key in quest
+                    if key.indexOf('answer')  != '-1'
+                      if (key[6] == 0 && numbVarEd == 0)
+                        - arrSort = 'right';
+                        
+                      if arrSort == 'right'
+                        - answersArr.push(quest[key]);
+                      else
+                        - answersArr.unshift(quest[key]);
+                      - numbVarEd++;
+                      
+                  - numbVarEd = 0;
+                  for itemAnsw in answersArr
+                    .row
+                      .col.s2.testAnsw.right-align 
+                        input(type="#{type}" name="#{index}" value="#{leters[numbVarEd]}" id="#{index}_#{leters[numbVarEd]}")
+                        label(for="#{index}_#{leters[numbVarEd]}") #{leters[numbVarEd]}
+                      .col.s10.testAnsw 
+                        p #{itemAnsw}
+                        - numbVarEd++;
+                  
+                //- p.adminAnsw Answer: #{quest.results}
+                
+        .input-field.twoBtns
+          .row
+            .col.s6
+              a.waves-effect.waves-light.btn.greyDarken(href="/tests") Cancel
+            .col.s6.right-align
+              if test.publish
+                button.waves-effect.waves-light.btn.btnDefault(type="submit") Save

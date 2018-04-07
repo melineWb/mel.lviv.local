@@ -1,0 +1,32 @@
+extends admin
+block mainAdmin
+  h1 #{title}
+  each article in articles
+    - let url = `/mel-admin/article/${article._id}`;
+    .card.tableArticles
+      .card-header
+        .row
+          .col-sm-8
+            h3 Title
+          .col-sm-3
+            h3 Category
+          .col-sm-1
+            h3 Publish
+      .card-body
+        .row
+          .col-sm-8.tdCol
+            a(href=url) #{article.title}
+          .col-sm-3.tdCol
+            p #{article.category}
+          .col-sm-1.text-center.tdCol
+            if article.publish
+              i.fa.fa-check
+            else
+              i.fa.fa-close
+
+  .fixed-action-btn
+    if title === 'Development'
+      - var link = '/mel-admin/development/add';
+    else
+      - var link = '/mel-admin/life/add';
+    a.Btnred(href=link) +

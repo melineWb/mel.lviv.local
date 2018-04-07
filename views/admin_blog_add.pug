@@ -1,0 +1,116 @@
+extends admin
+block mainAdmin
+  form(role='form',method='post',action='/mel-admin/article/add')
+    .modal.fade#codeViewModal(tabindex="-1" role="dialog" aria-labelledby="codeViewModalLabel" aria-hidden="true")
+      .modal-dialog(role="document")
+        .modal-content
+          .modal-header
+            h5.modal-title#codeViewModalLabel View source
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+          .modal-body
+            textarea(name="editor")#editor
+
+          .modal-footer
+            button.btn.btn-secondary(type="submit" data-dismiss="modal") Close
+            button.btn.btn-primary.saveChanges(type="submit" data-dismiss="modal") Save changes
+    .row
+      .col
+        h1 New article in #{cat}
+        .form-group
+          input(type="hidden" name="cat" value=cat)
+        .form-group
+          label(for="title") Название
+          input#title.form-control(name='title' placeholder='Enter title' type='text')
+        .form-group
+          input#link.form-control(name='url' placeholder='Enter link' aria-describedby='titleHelp')
+          small#titleHelp.form-text.text-muted Постоянная ссылка
+        .form-group
+          label(for="title") Описание
+          textarea.description.form-control(name="description" placeholder="Enter description" aria-describedby='description')
+          small#description.form-text.text-muted Краткое описание статьи
+        .form-group
+          .editor
+
+        .btnGroup
+          .row
+            .col
+              button(type="button").btn.btn-default Отмена
+            .col.text-right
+              button(type="button" data-toggle="modal" data-target="#codeViewModal").btn.btn-primary HTML
+                i.fa.fa-code
+              button(type="submit").btn.btn-success Сохранить
+
+      .col-sm-3.leftCol
+        .card.cardInfoArticle
+          .card-header Настройки записи
+          .card-body
+            .form-check
+              input.form-check-input#publish(type="checkbox" name="publish")
+              label.form-check-label(for="publish") Публиковать на сайте
+            .form-group.catSelect
+              label Выберите категорию
+              if cat === 'development'
+                - var options = ['Front-end', 'Node js', 'CMS', 'Другое'];
+              else
+                - var options = ['Статьи'];
+              select.form-control(name="category")
+                each option, index in options
+                  option #{option}
+              a.text-danger.deleteArticle Удалить
+
+        .card.cardArticleImg
+          .card-header Изображение записи
+          .card-body
+            .form-group
+              input(type="hidden" name="idImg" value="5a8f579ffe185b220d0afb64").idImg
+            img.img-thumbnail.rounded(src='/uploads/366_key-2114334_1280.jpg')
+            button(type="button" data-toggle="modal" data-target="#modalMedia").btn.btn-primary Add image
+
+        .card.metki
+          .card-header Метки
+          .card-body
+            .form-group
+              textarea.keys.form-control(name="keys")
+              small#metki.form-text.text-muted Метки разделяются запятыми
+
+
+  .modal.fade.bd-example-modal-lg#modalMedia(tabindex="-1" role="dialog" aria-labelledby="modalMediaLabel" aria-hidden="true")
+    .modal-dialog.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          h5.modal-title#codeViewModalLabel Media
+          button.close(type="button" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          .artContainerUpload
+            div
+              a.btn.btn-primary(data-toggle="collapse" href="#collapseUpload" role="button" aria-expanded="false" aria-controls="collapseUpload") Upload media
+            .collapse#collapseUpload
+              .card.card-body
+                form(role='form',method='post',action="/mel-admin/media/",enctype="multipart/form-data")
+                  .formUploadNew
+                    .row
+                      .col
+                        .custom-file-container(data-upload-id="myUniqueUploadId")
+                          label.card-title Добавить изображение
+                            a(href="javascript:void(0)" title="Clear Image").custom-file-container__image-clear
+                              i.fa.fa-close
+                          label.custom-file-container__custom-file
+                            input(type="file" accept="*" name="file").custom-file-container__custom-file__custom-file-input
+                            input(type="hidden" name="MAX_FILE_SIZE" value="10485760")
+                            span.custom-file-container__custom-file__custom-file-control
+                          .custom-file-container__image-preview
+                          .form-group
+                            button.btn.btn-primary(type="submit") Submit
+            .artContainer
+              .row
+                .col-xs-12
+                    each image in images
+                      .selectImageBox.float-left
+                        a(href="#" attr=image.url).selectImage.rounded
+                          img(src=image.url).img-thumbnail
+        .modal-footer
+          button.btn.btn-primary.saveChanges(type="submit" data-dismiss="modal") Save
+
+  script(src='/src/imageHandler.js')

@@ -1,0 +1,176 @@
+extends layaut
+
+block body
+  .indexPage
+    if currentUser.role != 'admin'
+      .container.white.contTop
+        .title
+          h1 My profile
+        if currentUser.results.length > 0
+          .diagramsBlc
+              .row
+                .col.m6.s12.center
+                  h3 Passed tests
+                  .circle(id="circles-1")
+                .col.m6.s12.center
+                  h3 Successfully completed tests
+                  .circle(id="circles-2")
+      
+      if currentUser.certif.length > 0
+        .certifBlc
+          .parallax-container
+            .parallax
+              img(src="/img/85558501.jpg")
+            .certifInfo
+              .container
+                h2 Sertificates
+                .sliderBox
+                  .arrw.leftArrw
+                  .arrw.rightArrw
+                  .sliderBoxIns
+                    .sliderCont
+                      each certif, index in currentUser.certif
+                        
+                        .slideItem
+                          a(href="#!")
+                            img(src="/img/certif.jpg")
+                            .slideItemText
+                              p #{currentUser.name}
+                              p.testName #{certif}
+        
+      .container.passedTests.testsList
+        h2 Passed Tests
+        if currentUser.results.length > 0
+          - var successComplited = 0;
+          ul.collection
+            each test, index in currentUser.results
+              li.collection-item.with-header
+                .collection-item
+                  p #{test.name}
+                    span.secondary-content.testRes
+                      if test.mark === 'pass'
+                        - successComplited++;
+                        img(src="/img/pass.png")
+                      else
+                        img(src="/img/fail.png")
+        else
+          p You don't pass any test. Finish on of the 
+            a(href="/tests") Tests
+        
+  .parallax-container
+    .parallax
+      img(src="/img/bgIndex1.jpg")
+    .profileInfo
+      .container.white
+        .row
+          .col.s12.m4.imgBox
+            img(src="#{currentUser.img}")
+
+          .col.s12.m8
+            h2 Personal Information
+            p 
+              b Name: 
+              | #{currentUser.name}
+            p 
+              b Login: 
+              | #{currentUser.username}
+            p 
+              b Role: 
+              | #{currentUser.role}
+            p 
+              b Email: 
+              | #{currentUser.email}
+            .center
+              a.waves-effect.waves-light.btn.btnDefault(href="#userEdit") Edit profile
+            h3  Upload new photo
+            form(role="form",method="post",action='/fileupload',enctype="multipart/form-data")
+              .file-field.input-field
+                .btn.btnDefault
+                  span File
+                  input(type="file" name="file")
+                .file-path-wrapper
+                  input.file-path.validate(type="text")
+              .center
+                button(type="submit").waves-effect.waves-light.btn.btnDefault Upload photo
+                
+        
+  .modal(id="userEdit")
+    .modal-content
+      .center
+        h3 Edit profile
+      form(role="form",method="post",action='/users/edit')
+        .row
+          .col.m6.s12
+            p Change your data
+            .input-field
+              label(for="userfullname") Name
+              input.validate#userfullname(type="text", name="userfullname", value="#{currentUser.name}",required)
+            .input-field
+              label(for="email") Email
+              input.validate#email(type="email", name="email", value="#{currentUser.email}",required)
+            .input-field
+              label(for="username") Login
+              input.validate#username(type="text", name="username", value="#{currentUser.username}",required)
+
+          .col.m6.s12
+            p If you wont change password, enter this fields
+            .input-field
+              label(for="password1") Old password
+              input.validate#password1(type="password", name="password1")
+            .input-field
+              label(for="password2") New password
+              input.validate#password2(type="password", name="password2")
+            .input-field
+              label(for="password3") Submit password
+              input.validate#password3(type="password", name="password3")
+            
+        .input-field.center
+          button.waves-effect.waves-light.btn.btnDefault(type="submit") Save changes
+          
+      .modal-action.modal-close
+        
+  .modal(id="modalCertif")
+    .modal-content
+      .certifModal
+        img(src="/img/certif.jpg")
+        .slideItemText
+          p #{currentUser.name}
+          p.testName
+      .modal-action.modal-close
+block scripts
+  script(src="/js/slider.js")
+  script(src="/js/circles.min.js")
+  script.
+    var myCircle = Circles.create({
+      id:                  'circles-1',
+      radius:              100,
+      value:               #{currentUser.results.length},
+      maxValue:            #{testCount},
+      width:               30,
+      text:                function(value){return value;},
+      colors:              ['#b0d4e3', '#00a1e1'],
+      duration:            400,
+      wrpClass:            'circles-wrp',
+      textClass:           'circles-text',
+      valueStrokeClass:    'circles-valueStroke',
+      maxValueStrokeClass: 'circles-maxValueStroke',
+      styleWrapper:        true,
+      styleText:           true
+    });
+    
+    var myCircle = Circles.create({
+      id:                  'circles-2',
+      radius:              100,
+      value:               #{successComplited},
+      maxValue:            #{currentUser.results.length},
+      width:               30,
+      text:                function(value){return value;},
+      colors:              ['#cbef85', '#84bc13'],
+      duration:            400,
+      wrpClass:            'circles-wrp',
+      textClass:           'circles-text',
+      valueStrokeClass:    'circles-valueStroke',
+      maxValueStrokeClass: 'circles-maxValueStroke',
+      styleWrapper:        true,
+      styleText:           true
+    });

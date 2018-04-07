@@ -1,0 +1,114 @@
+extends layaut
+
+block body
+  .container.white
+    .row.mar0
+      .col.s12
+        ul.tabs
+          li.tab.col.s3
+            a(href="#tab1") Edit test
+          li.tab.col.s3
+            a(href="#tab2") Settings
+      .col.s12#tab1
+        - var leters = ['a','b','c','d','e','f','g','h','i','j','k'];
+        .title
+          h1 Edit test "#{test.name}"
+        .formTest
+          each quest, index in test.data
+            .questionItem.bordBot
+              .row
+                .col.s11
+                  h4 
+                    span #{index + 1}. 
+                    | #{quest.question}
+                  - var numbVarEd = 0;
+                  - var answersArr = [];
+                  - var arrSort = 'left';
+                  
+                  each value, key in quest
+                    if key.indexOf('answer')  != '-1'
+                      if (key[6] == 0 && numbVarEd == 0)
+                        - arrSort = 'right';
+                        
+                      if arrSort == 'right'
+                        - answersArr.push(quest[key]);
+                      else
+                        - answersArr.unshift(quest[key]);
+                      - numbVarEd++;
+                      
+                  - numbVarEd = 0;
+                  for itemAnsw in answersArr
+                    .row
+                      .col.s1.testAnsw.right-align
+                        p.numbVar #{leters[numbVarEd]}
+                      .col.s11.testAnsw
+                        p #{itemAnsw}
+                        - numbVarEd++;
+
+                  p.adminAnsw Answer: #{quest.results}
+                .col.s1
+                  form(role="form",method="post",action='/question/#{test._id}/del/#{index}')
+                    button.removeItem(type="submit")
+                      i.material-icons delete
+                  
+          h2 Add Question
+          form(role="form",method="post",action='/question/add/#{test.id}')
+            .row
+              .col.s12.questionItem
+                .questionItemCreate
+                  .input-field
+                    label(for="questionname") Question
+                    textarea.materialize-textarea.validate#questionname(type="text",name="questionname")
+                  .variantBlc
+                    - var startAnswers = 0;
+                    - var countAnswers = 2;
+                    - var arrAnswers = [];
+                    - for (var i=0; i<countAnswers; i++)
+                      .row.lineVariantEdit
+                        .col.s2.testAnsw.right-align 
+                          input(type="checkbox" name="#{leters[i]}" id="#{leters[i]}")
+                          label(for="#{leters[i]}") #{leters[i]}
+                        .col.s10.testAnsw 
+                          .input-field
+                            label(for="answer#{i}") Answer #{leters[i]}
+                            input.validate(type="text",name="answer#{i}" id="answer#{i}")
+                  .addVariantBlc
+                    a(href="#")#addVariant.waves-effect.waves-light.btn.addVariant 
+                      i.material-icons.left add
+                      | Add variant
+                      
+                .input-field.twoBtns
+                  .row
+                    .col.s6
+                      a.waves-effect.waves-light.btn.greyDarken(href="/tests") Cancel
+                    .col.s6.right-align
+                      button.waves-effect.waves-light.btn.btnDefault(type="submit") Save
+      .col.s12#tab2
+        .title
+          h1 Edit test settings
+        .formTest
+          form(role="form",method="post",action='/settings/#{test.id}')
+            .input-field
+              label(for="testname") Test name
+              input.validate#testname(type="text",name="testname",required, value="#{test.name}")
+            label How much user can pass this test?
+            select(name="attemptselect")
+              option(value="#{test.trying}" selected) #{test.trying}
+              option(value="unset" name="unset") unset
+              option(value="1" name="attempt") 1 attempt
+            p Minimum result when test will be passed (%). Default - 60%.
+            .input-field
+              label(for="min") Minimum result (%)
+              input.validate#testname(type="number",name="min", value="#{test.min}")
+            .input-field
+              if test.publish
+                input(type="checkbox", name="publish", id="#publish", checked)
+              else
+                input(type="checkbox", name="publish", id="#publish")
+              label(for="#publish") Publish test
+            .input-field.twoBtns
+              .row
+                .col.s6
+                  a.waves-effect.waves-light.btn.greyDarken(href="/tests") Cancel
+                .col.s6.right-align
+                  button.waves-effect.waves-light.btn.btnDefault(type="submit") Save
